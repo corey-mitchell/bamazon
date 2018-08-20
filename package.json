@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Amazon type application for further node and mySQL knowledge",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corey-mitchell/bamazon.git"
+  },
+  "keywords": [],
+  "author": "Corey Mitchell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corey-mitchell/bamazon/issues"
+  },
+  "homepage": "https://github.com/corey-mitchell/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.1.0",
+    "my": "^0.3.3",
+    "sql": "^
