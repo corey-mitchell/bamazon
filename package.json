@@ -18,10 +18,14 @@
   },
   "homepage": "https://github.com/corey-mitchell/bamazon#readme",
   "dependencies": {
+    "cli-table": "^0.3.1",
+    "console.table": "^0.10.0",
     "inquirer": "^6.1.0",
     "lodash": "^4.17.10",
     "my": "^0.3.3",
     "mysql": "^2.16.0",
-    "sql": "^0.78.0"
+    "prompt-choices": "^5.0.0",
+    "sql": "^0.78.0",
+    "table": "^4.0.3"
   }
 }
