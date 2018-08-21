@@ -16,6 +16,7 @@ const connection = mysql.createConnection({
 // Connects to database
 connection.connect((err) => {
     if (err) throw err;
+    console.log(`connected as ID ${connection.threadId}`);
     availItems();
 });
 
@@ -31,7 +32,7 @@ const availItems = () => {
 // Start function
 const buySomething = () => {
     inquirer
-        .prompt({
+        .prompt([{
             name: "itemID",
             type: "input",
             message: "Please type the ID number of the product you would like to buy."
@@ -41,8 +42,24 @@ const buySomething = () => {
             name: "quantity",
             type: "input",
             message: "How many units would you like to buy?"
-        })
+        }])
         .then((answer)=>{
-            console.log(answer)
+            console.log(`User would like to purchase ${answer.quantity} copies of item ID ${answer.itemID}`);
+            connection.query(
+                "UPDATE products SET ? WHERE ?",
+                [
+                    {
+                        stock: - answer.quantity
+                    },
+                    {
+                        product: answer.itemID
+                    }
+                ],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`${res.affectedRows} products updated!`)
+                    connection.end();
+                }
+            );
         });
 }
