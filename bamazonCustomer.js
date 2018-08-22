@@ -18,6 +18,8 @@ connection.connect((err) => {
     if (err) throw err;
     console.log(`connected as ID ${connection.threadId}`);
     availItems();
+    // Because of the load time of the availItems function, I had to put the buySomething function in a setTimeout
+    setTimeout(buySomething, 500);
 });
 
 // Logs out available products in a table
@@ -26,7 +28,6 @@ const availItems = () => {
         if (err) throw err;
         console.table(res);
     });
-    buySomething();
 };
 
 // Start function
@@ -46,19 +47,15 @@ const buySomething = () => {
         .then((answer)=>{
             console.log(`User would like to purchase ${answer.quantity} copies of item ID ${answer.itemID}`);
             connection.query(
-                "UPDATE products SET ? WHERE ?",
-                [
-                    {
-                        stock: - answer.quantity
-                    },
-                    {
-                        product: answer.itemID
-                    }
-                ],
+                `UPDATE products SET stock=stock-${answer.quantity} WHERE id='${answer.itemID}'`,
                 (err, res) => {
                     if (err) throw err;
-                    console.log(`${res.affectedRows} products updated!`)
-                    connection.end();
+                    if(res.stock < answer.quantity) {
+                        console.log("Not enough in stock.")
+                    } else {
+                        console.log(`${res.affectedRows} products updated!`)
+                        connection.end();
+                    };
                 }
             );
         });
