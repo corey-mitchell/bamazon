@@ -45,17 +45,26 @@ const buySomething = () => {
             message: "How many units would you like to buy?"
         }])
         .then((answer)=>{
+            if(answer.itemID)
             console.log(`User would like to purchase ${answer.quantity} copies of item ID ${answer.itemID}`);
+
+
             connection.query(
                 `UPDATE products SET stock=stock-${answer.quantity} WHERE id='${answer.itemID}'`,
                 (err, res) => {
                     if (err) throw err;
-                    if(res.stock < answer.quantity) {
-                        console.log("Not enough in stock.")
+                    
+                    if (res.message[15] === '0') {
+                        console.log("ERROR: Please enter valid ID number!");
+                        buySomething();
                     } else {
-                        console.log(`${res.affectedRows} products updated!`)
-                        connection.end();
-                    };
+                        if(res.stock < answer.quantity) {
+                            console.log("Not enough in stock.")
+                        } else {
+                            console.log(`${res.affectedRows} products updated!`)
+                            connection.end();
+                        };
+                    }
                 }
             );
         });
