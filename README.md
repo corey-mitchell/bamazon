@@ -3,7 +3,12 @@ Amazon type application for further node and mySQL knowledge. Currently has a se
 
 ## Getting Started
 
-Run 'node bamazonCustomer' in terminal to begin. User will be prompted to input ID number of desired product. Afterwards, the user will be asked the quantity they desire to purchase. Once these questions are answered, the stock data column will be updated to reflect new available stock. If there is not enough stock to supply desired demand, the user will be updated in the console.
+Run 'node bamazonCustomer' in terminal to begin. User will be prompted to input ID number of desired product:
+![Starting Application](readme_photos/Starting.PNG)
+
+
+
+Afterwards, the user will be asked the quantity they desire to purchase. Once these questions are answered, the stock data column will be updated to reflect new available stock. If there is not enough stock to supply desired demand, the user will be updated in the console.
 
 ### Prerequisites
 
@@ -26,7 +31,7 @@ const inquirer = require("inquirer");
 require("console.table");
 ```
 
-**Note console.table is used just like console.log, e.g. *console.table('table to be logged in console');*
+**Note:** console.table is used just like console.log, e.g. *console.table('table to be logged in console');*
 
 ## Authors
 
