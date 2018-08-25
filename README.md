@@ -13,9 +13,13 @@ If the user does not supply an input that is a non-zero integer then they will b
 ![Not a number](https://user-images.githubusercontent.com/37916145/44622371-c0de3800-a87c-11e8-98b2-8236ff99ac60.PNG)
 
 Once these questions are successfully answered, the stock data column will be updated to reflect new available stock.
+
 Original mySQL data:
+
 ![mySQL data](https://user-images.githubusercontent.com/37916145/44622369-bc198400-a87c-11e8-8cbf-ea93d3ffb6d4.PNG)
+
 Updated Data Row:
+
 ![Updated mySQL data row](https://user-images.githubusercontent.com/37916145/44622370-be7bde00-a87c-11e8-89a9-46b95447bcfe.PNG)
 
 The user is then prompted that their order was successfully placed and given the total of their order:
