@@ -8,8 +8,8 @@ Run 'node bamazonCustomer' in terminal to begin. User will be prompted to input 
 ### Prerequisites
 
 Dependencies:
-  mysql
-  inquirer
+  mysql,
+  inquirer,
   console.table
 
 Terminal command for downloading dependencies
@@ -23,10 +23,10 @@ Initialize Dependencies
 ```
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const table = require("console.table");
+require("console.table");
 ```
 
-**Note console.table is used just like console.log, e.g. *console.table('table to be logged in console');* **
+**Note console.table is used just like console.log, e.g. *console.table('table to be logged in console');*
 
 ## Authors
 
