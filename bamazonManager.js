@@ -26,6 +26,20 @@ const validateInput = (value) => {
 	};
 };
 
+// validateNumeric makes sure that the user is supplying only positive numbers for their inputs
+// this is a different function so that the input will allow decimals
+function validateNumeric(value) {
+	// Value must be a positive number
+	var number = (typeof parseFloat(value)) === 'number';
+	var positive = parseFloat(value) > 0;
+
+	if (number && positive) {
+		return true;
+	} else {
+		return 'Please enter a positive number for the unit price.'
+	}
+}
+
 // Prompts manager for addition actions in case the user wanted to do more before closing connection.
 const moreActions = () => {
     inquirer
@@ -142,7 +156,7 @@ const addProduct = () => {
                 name: "price",
                 type: "input",
                 message: "How much does this product cost?",
-                validate: validateInput
+                validate: validateNumeric
             },
             {
                 name: "stock",
@@ -161,16 +175,17 @@ const addProduct = () => {
                 }).then((answer)=>{
                     const inputCheck = answer.itemCheck
                     if(inputCheck === "Yes") {
-                        const castPrice = Number(input.price)
-                        const castStock = Number(input.stock)
+                        // Create the insertion query string
+		                const queryStr = 'INSERT INTO products SET ?';
 
-                        connection.connect(
-                            `INSERT INTO products(product, department, price, stock) SET (${input.product}, ${input.department}, ${castPrice}, ${castStock})`,
-                            (err, res)=>{
-                                if (err) throw err;
-                                console.log(res);
-                            }
-                        )
+                        // Add new product to the db
+                        connection.query(queryStr, input, (err) => {
+                            if (err) throw err;
+                        });
+
+                        console.log(`${input.product} has been added to products.\n`)
+                        //Launches addition actions in case the user wanted to do more before closing connection.
+                        moreActions();
                     } else {
                         addProduct();
                     };
