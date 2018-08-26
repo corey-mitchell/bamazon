@@ -129,6 +129,8 @@ const addInventory = () => {
                                     },
                                 );
                                 console.log('Stock has been updated!\n');
+                                //Shows updated products table
+                                products();
                                 //Launches addition actions in case the user wanted to do more before closing connection.
                                 moreActions();
                             });
