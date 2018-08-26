@@ -27,7 +27,7 @@ connection.connect((err) => {
 });
 
 // Makes sure that the user is supplying only positive integers for their inputs
-function validateInput(value) {
+const validateInput = (value) => {
 	const integer = Number.isInteger(parseFloat(value));
 	const sign = Math.sign(value);
 

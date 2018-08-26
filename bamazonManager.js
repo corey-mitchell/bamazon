@@ -13,6 +13,19 @@ const connection = mysql.createConnection({
     database: "bamazon"
 });
 
+// Makes sure that the user is supplying only positive integers for their inputs.
+// added this here because node does not support the import method yet.
+const validateInput = (value) => {
+	const integer = Number.isInteger(parseFloat(value));
+	const sign = Math.sign(value);
+
+	if (integer && (sign === 1)) {
+		return true;
+	} else {
+		return 'Please enter a whole non-zero number.';
+	};
+};
+
 // Logs out available products in a table
 const products = () => {
     connection.query("SELECT * FROM products", (err, res)=>{
@@ -34,7 +47,24 @@ const lowInventory = () => {
 
 // Lets manager add inventory
 const addInventory = () => {
-    console.log('Add inventory ran')
+    inquirer
+        .prompt({
+            name: 'addInv',
+            type: 'input',
+            message: 'Which item would you like to add inventory to?',
+            validate: validateInput,
+            filter: Number
+        }).then((input)=>{
+            const manInput = input.addInv
+            connection.query(
+                'SELECT * FROM products WHERE ?',
+                {id: manInput},
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(res);
+                }
+            );
+        });
 };
 
 // Lets manager add products
@@ -66,8 +96,8 @@ const runManager = () => {
                     break;
 
                 case 'Add inventory to product':
-                    addInventory();
-                    // connection.end();
+                    products();
+                    setTimeout(addInventory, 500);
                     break;
 
                 case 'Add a product':
