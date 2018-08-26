@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 });
 
 // Makes sure that the user is supplying only positive integers for their inputs.
-// added this here because node does not support the import method yet.
+// node does not support the import method yet so I added this code block on both files.
 const validateInput = (value) => {
 	const integer = Number.isInteger(parseFloat(value));
 	const sign = Math.sign(value);
@@ -54,14 +54,38 @@ const addInventory = () => {
             message: 'Which item would you like to add inventory to?',
             validate: validateInput,
             filter: Number
-        }).then((input)=>{
+        }).then((input)=>{         
             const manInput = input.addInv
             connection.query(
                 'SELECT * FROM products WHERE ?',
                 {id: manInput},
                 (err, res) => {
                     if (err) throw err;
-                    console.log(res);
+                    if (res.length === 0) {
+                        console.log("ERROR: Please enter valid ID number!\n");
+                        addInventory();
+                    } else{
+                        inquirer
+                            .prompt({
+                                name: 'addStock',
+                                type: 'input',
+                                message: 'How much stock would you like to add?',
+                                validate: validateInput,
+                                filter: Number
+                            }).then((input)=>{
+                                const oldStock = res[0].stock;
+                                const newStock = input.addStock
+                                connection.query(
+                                    `UPDATE products SET stock = ${oldStock + newStock} WHERE id = ${manInput}`,
+                                    (err, data) => {
+                                        if (err) throw err;
+                                    },
+                                );
+                                console.log('Stock has been updated!\n');
+                                products();
+                                connection.end();
+                            });
+                    };
                 }
             );
         });
@@ -78,8 +102,7 @@ const runManager = () => {
         .prompt({
             name: 'manager',
             type: 'rawlist',
-            choices: ['View available product', 'View products with low inventory', 'Add inventory to product', 'Add a product']
-            
+            choices: ['View available product', 'View products with low inventory', 'Add inventory to product', 'Add a product']           
         }).then((input) => {
             const command = input.manager;
 

@@ -77,13 +77,13 @@ const buySomething = () => {
                     
                     // Checks that the user input is a valid item in stock
                     if (res.length === 0) {
-                        console.log("ERROR: Please enter valid ID number!");
+                        console.log("ERROR: Please enter valid ID number!\n");
                         buySomething();
                     } else {
                         // Checks stock to so if there is enough. If there isn't then it prompt user for new input
                         const productData = res[0];
                         if(quantity > productData.stock) {
-                            console.log("Sorry, we don't have enough in stock.");
+                            console.log("Sorry, we don't have enough in stock.\n");
                             buySomething();
                         } else {
                             // If there is enough stock, this will output the total price of order
