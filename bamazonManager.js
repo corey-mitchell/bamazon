@@ -26,6 +26,27 @@ const validateInput = (value) => {
 	};
 };
 
+const moreActions = () => {
+    // Prompts manager for additional tasks
+    inquirer
+    .prompt({
+        name: "runAddInv",
+        type: "rawlist",
+        message: "Would you like do something else?",
+        choices: ['Yes', 'No']
+    }).then((input)=>{
+        const answer = input.runAddInv
+        switch (answer) {
+            case 'Yes':
+                runManager();
+                break;
+            case 'No':
+                connection.end();
+                break;
+        };
+    });
+}
+
 // Logs out available products in a table
 const products = () => {
     connection.query("SELECT * FROM products", (err, res)=>{
@@ -40,7 +61,13 @@ const lowInventory = () => {
         `SELECT * FROM products WHERE stock < 5`,
         (err, res) => {
             if (err) throw err;
-            console.table(res);
+            if(res.length === 0) {
+                console.log('All products are well stocked!');
+            } else {
+                // Logs low inventory results
+                console.table(res);
+                moreActions();
+            };
         }
     );
 };
@@ -82,8 +109,7 @@ const addInventory = () => {
                                     },
                                 );
                                 console.log('Stock has been updated!\n');
-                                products();
-                                connection.end();
+                                moreActions();
                             });
                     };
                 }
@@ -110,22 +136,20 @@ const runManager = () => {
             switch (command) {
                 case 'View available product':
                     products();
-                    connection.end();
+                    setTimeout(moreActions, 200);
                     break;
 
                 case 'View products with low inventory':
                     lowInventory();
-                    connection.end();
                     break;
 
                 case 'Add inventory to product':
                     products();
-                    setTimeout(addInventory, 500);
+                    setTimeout(addInventory, 200);
                     break;
 
                 case 'Add a product':
                     addProduct();
-                    // connection.end();
                     break;
             };
         });
