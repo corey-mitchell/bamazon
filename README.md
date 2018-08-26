@@ -1,5 +1,5 @@
 # bamazon
-Amazon type application for further node and mySQL knowledge. Currently has a set list of items and monitors available stock. Stock will deplete based upon user input of desired quantity.
+Amazon type application for further node and mySQL knowledge. Customer file has a set list of items and monitors available stock. Stock will deplete based upon user input of desired quantity. Manager file allows the user to audit product information.
 
 ## Getting Started as a Customer
 
