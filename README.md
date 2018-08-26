@@ -40,13 +40,13 @@ If the user answers yes then they will be shown the starting list. If the user a
 
 Manager's options:
 
-**Option 1:** View available products. If the user chooses this option then a table will display all of the information about all available products.
+**Option 1:** *View available products*. If the user chooses this option then a table will display all of the information about all available products.
 ![Available Products](https://user-images.githubusercontent.com/37916145/44632754-e4b98080-a945-11e8-80d9-08bee232e276.PNG)
 
-**Option 2:** View products with low inventory. If the user chooses this option, a table will display all the items that have a stock quantity lower than 5.
+**Option 2:** *View products with low inventory*. If the user chooses this option, a table will display all the items that have a stock quantity lower than 5.
 ![Low stock products](https://user-images.githubusercontent.com/37916145/44632781-5d204180-a946-11e8-8e13-6d06192702c7.PNG)
 
-**Option 3:** Add inventory to product. This options allows the user to add inventory to an exsisting product. It will first display the products available and ask the user to input a product ID (the user will be limited to only integars that are equal to a valid product ID).
+**Option 3:** *Add inventory to product*. This options allows the user to add inventory to an exsisting product. It will first display the products available and ask the user to input a product ID (the user will be limited to only integars that are equal to a valid product ID).
 ![Add inventory start](https://user-images.githubusercontent.com/37916145/44632815-f18aa400-a946-11e8-8258-51f09742d992.PNG)
 
 After choosing a valid ID number, the user will be asked how much stock they would like to add.
@@ -55,13 +55,15 @@ After choosing a valid ID number, the user will be asked how much stock they wou
 Once the stock is added, the user is prompted that the stock has been added and shown the updated items table.
 ![Updated inventory](https://user-images.githubusercontent.com/37916145/44632878-3400b080-a948-11e8-84d8-6829d5053277.PNG)
 
-**Option 4:** Add a product. As stated in the title of this option, the function here allows the user to add a new product to the table of available products. Once this option is selected, the user will be prompted to provide details for this new item. Details such as; product name, product department, product price and how much product is in stock.
+**Option 4:** *Add a product*. As stated in the title of this option, the function here allows the user to add a new product to the table of available products. Once this option is selected, the user will be prompted to provide details for this new item. Details such as; product name, product department, product price and how much product is in stock.
 ![Add a product](https://user-images.githubusercontent.com/37916145/44632917-dfaa0080-a948-11e8-9308-c8febe676180.PNG)
 
 Once these questions are answered, the terminal will display a table with the users input and ask them to double check that the information is correct.
+
 ![Product checker](https://user-images.githubusercontent.com/37916145/44632939-2bf54080-a949-11e8-829d-99e0fc46bfc9.PNG)
 
 If the user answers no then they will be asked the questions again. Else they will be alerted that the product has been added to the database.
+
 ![Product added](https://user-images.githubusercontent.com/37916145/44632951-6fe84580-a949-11e8-8a70-62993cd866cc.PNG)
 
 
