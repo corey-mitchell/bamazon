@@ -32,41 +32,50 @@ const lowInventory = () => {
     );
 };
 
+// Lets manager add inventory
 const addInventory = () => {
-    console.log("add inventory");
+    console.log('Add inventory ran')
 };
 
+// Lets manager add products
 const addProduct = () => {
-    console.log("add new product");
+    console.log("add new product ran");
 };
 
-// Combines everything typed after file name into a string. making it all equivelent to process.argv[3]
-const splice = process.argv.splice(2, process.argv.length);
-const command = splice.join(' ');
+// Creates prompt for manager and handles choices
+const runManager = () => {
+    inquirer
+        .prompt({
+            name: 'manager',
+            type: 'rawlist',
+            choices: ['View available product', 'View products with low inventory', 'Add inventory to product', 'Add a product']
+            
+        }).then((input) => {
+            const command = input.manager;
 
-// Switch case for handling the commands
-switch (command) {
-    case 'view products for sale':
-        products();
-        connection.end();
-        break;
+            // Switch case for handling the commands
+            switch (command) {
+                case 'View available product':
+                    products();
+                    connection.end();
+                    break;
 
-    case 'view low inventory':
-        lowInventory();
-        connection.end();
-        break;
+                case 'View products with low inventory':
+                    lowInventory();
+                    connection.end();
+                    break;
 
-    case 'add to inventory':
-        addInventory();
-        // connection.end();
-        break;
+                case 'Add inventory to product':
+                    addInventory();
+                    // connection.end();
+                    break;
 
-    case 'add new product':
-        addProduct();
-        // connection.end();
-        break;
-    
-    default:
-        console.log("Missing or invalid command.");
-        break;
+                case 'Add a product':
+                    addProduct();
+                    // connection.end();
+                    break;
+            };
+        });
 };
+
+runManager();
