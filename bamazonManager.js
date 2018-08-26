@@ -26,8 +26,8 @@ const validateInput = (value) => {
 	};
 };
 
+// Prompts manager for addition actions in case the user wanted to do more before closing connection.
 const moreActions = () => {
-    // Prompts manager for additional tasks
     inquirer
     .prompt({
         name: "runAddInv",
@@ -58,6 +58,7 @@ const products = () => {
 // Logs out all items with a stock that is lower than five
 const lowInventory = () => {
     connection.query(
+        // Checks for products with a stock below 5 units
         `SELECT * FROM products WHERE stock < 5`,
         (err, res) => {
             if (err) throw err;
@@ -66,6 +67,7 @@ const lowInventory = () => {
             } else {
                 // Logs low inventory results
                 console.table(res);
+                //Launches addition actions in case the user wanted to do more before closing connection.
                 moreActions();
             };
         }
@@ -75,6 +77,7 @@ const lowInventory = () => {
 // Lets manager add inventory
 const addInventory = () => {
     inquirer
+        // Picks which item to add stock to
         .prompt({
             name: 'addInv',
             type: 'input',
@@ -88,11 +91,13 @@ const addInventory = () => {
                 {id: manInput},
                 (err, res) => {
                     if (err) throw err;
+                    // Checks that the ID inputed is a valid ID
                     if (res.length === 0) {
                         console.log("ERROR: Please enter valid ID number!\n");
                         addInventory();
                     } else{
                         inquirer
+                            // Uses user input to determine how much stock to add
                             .prompt({
                                 name: 'addStock',
                                 type: 'input',
@@ -102,6 +107,7 @@ const addInventory = () => {
                             }).then((input)=>{
                                 const oldStock = res[0].stock;
                                 const newStock = input.addStock
+                                // Updates DB
                                 connection.query(
                                     `UPDATE products SET stock = ${oldStock + newStock} WHERE id = ${manInput}`,
                                     (err, data) => {
@@ -109,6 +115,7 @@ const addInventory = () => {
                                     },
                                 );
                                 console.log('Stock has been updated!\n');
+                                //Launches addition actions in case the user wanted to do more before closing connection.
                                 moreActions();
                             });
                     };
@@ -119,7 +126,56 @@ const addInventory = () => {
 
 // Lets manager add products
 const addProduct = () => {
-    console.log("add new product ran");
+    inquirer
+        .prompt([
+            {
+                name: "product",
+                type: "input",
+                message: "What is the name of the product you would like to add?"
+            },
+            {
+                name: "department",
+                type: "input",
+                message: "What department does this product belong in?"
+            },
+            {
+                name: "price",
+                type: "input",
+                message: "How much does this product cost?",
+                validate: validateInput
+            },
+            {
+                name: "stock",
+                type: "input",
+                message: "How many do you currently have in stock?",
+                validate: validateInput
+            }
+        ]).then((input)=>{
+            console.table(input)
+            inquirer
+                .prompt({
+                    name: "itemCheck",
+                    type: "rawlist",
+                    message: "Is everything correct?",
+                    choices: ["Yes", "No"]
+                }).then((answer)=>{
+                    const inputCheck = answer.itemCheck
+                    if(inputCheck === "Yes") {
+                        const castPrice = Number(input.price)
+                        const castStock = Number(input.stock)
+
+                        connection.connect(
+                            `INSERT INTO products(product, department, price, stock) SET (${input.product}, ${input.department}, ${castPrice}, ${castStock})`,
+                            (err, res)=>{
+                                if (err) throw err;
+                                console.log(res);
+                            }
+                        )
+                    } else {
+                        addProduct();
+                    };
+                });
+        });
 };
 
 // Creates prompt for manager and handles choices
@@ -155,4 +211,5 @@ const runManager = () => {
         });
 };
 
+// Starts the application
 runManager();
