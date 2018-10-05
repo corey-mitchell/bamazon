@@ -90,6 +90,6 @@ require("console.table");
 
 **Note:** console.table is used just like console.log, e.g. *console.table('table to be logged in console');*
 
-## Authors
+## Author
 
 * **Corey Mitchell** - *Initial work* - (https://github.com/corey-mitchell)
