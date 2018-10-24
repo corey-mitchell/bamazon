@@ -92,4 +92,4 @@ require("console.table");
 
 ## Author
 
-* **Corey Mitchell** - *Initial work* - (https://github.com/corey-mitchell)
+* **Corey Mitchell** - (https://github.com/corey-mitchell)
